@@ -8,8 +8,8 @@ const CACHE_CONTROL_HEADER_VALUE =
 const cors = microCors();
 
 async function Cest(request, response) {
-    const requestedCest = request.query.cest;
-    const requestedNcm = request.query.ncm;
+    const requestedNcm = String(request.query.ncm || '');
+    const requestedCest = String(request.query.cest || '');
     const clientIp =
         request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 
@@ -22,12 +22,12 @@ async function Cest(request, response) {
 
     try {
         let filteredCest = cest.filter((cest) => {
-            return normaliza(cest.descricao).includes(normaliza(requestedCest));
+            return !requestedNcm ? !cest.ncm : comparaNcm(cest.ncm, requestedNcm);
         });
 
-        if (requestedNcm) {
+        if (requestedCest) {
             filteredCest = filteredCest.filter((cest) => {
-                return !cest.ncm || comparaNcm(cest.ncm, requestedNcm);
+                return normaliza(cest.descricao).includes(normaliza(requestedCest));
             });
         }
 

@@ -1,8 +1,14 @@
+import { isString } from "lodash";
+
 function comparaNcm(str, strComparacao) {
-    if (str.length >= strComparacao.length) {
-        return str.includes(strComparacao);
-    } else {
+    if (!isString(str) || !isString(strComparacao)) {
+        return false;
+    }
+
+    if (str.length < strComparacao.length) {
         return strComparacao.includes(str);
+    } else {
+        return str.includes(strComparacao);
     }
 }
 
