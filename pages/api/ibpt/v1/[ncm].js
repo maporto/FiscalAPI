@@ -23,8 +23,19 @@ async function Ibpt(request, response) {
             return comparaNcm(ibpt.codigo, requestedNcm);
         });
 
+        console.log(filteredIbpts)
+
         response.status(200);
-        response.json(filteredIbpts.shift());
+        response.json(filteredIbpts.shift() || {
+            "codigo": "00000000",
+            "ex": "",
+            "tipo": 0,
+            "descricao": "PRODUTO NAO ESPECIFICADO NA LISTA DE NCM",
+            "nacionalfederal": 0,
+            "importadosfederal": 0,
+            "estadual": 0,
+            "municipal": 0,
+        });
     } catch (error) {
         console.log(error);
         response.status(500);
