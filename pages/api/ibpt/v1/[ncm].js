@@ -20,7 +20,7 @@ async function Ibpt(request, response) {
 
     try {
         let filteredIbpts = ibpt.filter((ibpt) => {
-            return comparaNcm(ibpt.codigo, requestedNcm);
+            return comparaNcm(String(ibpt.codigo), requestedNcm);
         });
 
         console.log(filteredIbpts)
